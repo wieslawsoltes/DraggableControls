@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Xaml.Interactivity;
 
@@ -17,6 +18,15 @@ namespace DockDemo.Behaviors
         private int _targetIndex;
         private ItemsControl? _itemsControl;
         private IControl? _draggedContainer;
+
+        public static readonly StyledProperty<Orientation> OrientationProperty = 
+            AvaloniaProperty.Register<ItemDragBehavior, Orientation>(nameof(Orientation));
+
+        public Orientation Orientation
+        {
+            get => GetValue(OrientationProperty);
+            set => SetValue(OrientationProperty, value);
+        }
 
         protected override void OnAttached()
         {
@@ -140,18 +150,32 @@ namespace DockDemo.Behaviors
                 return;
             }
 
+            var orientation = Orientation;
             var position = e.GetPosition(_itemsControl);
-            var deltaX = position.X - _start.X;
+            var delta = orientation == Orientation.Horizontal ? position.X - _start.X : position.Y - _start.Y;
 
-            ((TranslateTransform) _draggedContainer.RenderTransform).X = deltaX;
+            if (orientation == Orientation.Horizontal)
+            {
+                ((TranslateTransform) _draggedContainer.RenderTransform).X = delta;
+            }
+            else
+            {
+                ((TranslateTransform) _draggedContainer.RenderTransform).Y = delta;
+            }
 
             _draggedIndex = _itemsControl.ItemContainerGenerator.IndexFromContainer(_draggedContainer);
             _targetIndex = -1;
 
             var draggedBounds = _draggedContainer.Bounds;
-            var draggedStartX = draggedBounds.X;
-            var draggedDeltaStartX = draggedBounds.X + deltaX;
-            var draggedDeltaEndX = draggedBounds.X + deltaX + draggedBounds.Width;
+
+            var draggedStart = orientation == Orientation.Horizontal ? 
+                draggedBounds.X : draggedBounds.Y;
+
+            var draggedDeltaStart = orientation == Orientation.Horizontal ? 
+                draggedBounds.X + delta : draggedBounds.Y + delta;
+
+            var draggedDeltaEnd = orientation == Orientation.Horizontal ?
+                draggedBounds.X + delta + draggedBounds.Width : draggedBounds.Y + delta + draggedBounds.Height;
 
             var i = 0;
 
@@ -165,25 +189,57 @@ namespace DockDemo.Behaviors
                 }
 
                 var targetBounds = targetContainer.Bounds;
-                var targetStartX = targetBounds.X;
-                var targetMidX = targetBounds.X + targetBounds.Width / 2;
+
+                var targetStart = orientation == Orientation.Horizontal ? 
+                    targetBounds.X : targetBounds.Y;
+
+                var targetMid = orientation == Orientation.Horizontal ? 
+                    targetBounds.X + targetBounds.Width / 2 : targetBounds.Y + targetBounds.Height / 2;
+
                 var targetIndex = _itemsControl.ItemContainerGenerator.IndexFromContainer(targetContainer);
 
-                if (targetStartX > draggedStartX && draggedDeltaEndX >= targetMidX)
+                if (targetStart > draggedStart && draggedDeltaEnd >= targetMid)
                 {
-                    ((TranslateTransform) targetContainer.RenderTransform).X = -draggedBounds.Width;
-                    _targetIndex = _targetIndex == -1 ? targetIndex : targetIndex > _targetIndex ? targetIndex : _targetIndex;
+                    if (orientation == Orientation.Horizontal)
+                    {
+                        ((TranslateTransform) targetContainer.RenderTransform).X = -draggedBounds.Width;
+                    }
+                    else
+                    {
+                        ((TranslateTransform) targetContainer.RenderTransform).Y = -draggedBounds.Height;
+                    }
+
+                    _targetIndex = _targetIndex == -1 ? 
+                        targetIndex : 
+                        targetIndex > _targetIndex ? targetIndex : _targetIndex;
                     Debug.WriteLine($"Moved Right {_draggedIndex} -> {_targetIndex}");
                 }
-                else if (targetStartX < draggedStartX && draggedDeltaStartX <= targetMidX)
+                else if (targetStart < draggedStart && draggedDeltaStart <= targetMid)
                 {
-                    ((TranslateTransform) targetContainer.RenderTransform).X = draggedBounds.Width;
-                    _targetIndex = _targetIndex == -1 ? targetIndex : targetIndex < _targetIndex ? targetIndex : _targetIndex;
+                    if (orientation == Orientation.Horizontal)
+                    {
+                        ((TranslateTransform) targetContainer.RenderTransform).X = draggedBounds.Width;
+                    }
+                    else
+                    {
+                        ((TranslateTransform) targetContainer.RenderTransform).Y = draggedBounds.Height;
+                    }
+
+                    _targetIndex = _targetIndex == -1 ? 
+                        targetIndex : 
+                        targetIndex < _targetIndex ? targetIndex : _targetIndex;
                     Debug.WriteLine($"Moved Left {_draggedIndex} -> {_targetIndex}");
                 }
                 else
                 {
-                    ((TranslateTransform) targetContainer.RenderTransform).X = 0;
+                    if (orientation == Orientation.Horizontal)
+                    {
+                        ((TranslateTransform) targetContainer.RenderTransform).X = 0;
+                    }
+                    else
+                    {
+                        ((TranslateTransform) targetContainer.RenderTransform).Y = 0;
+                    }
                 }
 
                 i++;

@@ -28,7 +28,7 @@
     <ListBox>
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal"/>
+                <StackPanel Orientation="Vertical"/>
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
         <ListBoxItem>

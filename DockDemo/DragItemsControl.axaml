@@ -93,7 +93,7 @@
             <b:SharedContentTemplate>
                 <b:SharedContent>
                     <i:BehaviorCollection>
-                        <b:ItemDragBehavior/>
+                        <b:ItemDragBehavior Orientation="Vertical"/>
                     </i:BehaviorCollection>
                 </b:SharedContent>
             </b:SharedContentTemplate>
