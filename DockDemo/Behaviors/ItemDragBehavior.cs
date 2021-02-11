@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
@@ -142,6 +143,11 @@ namespace DockDemo.Behaviors
             var draggedItem = items[draggedIndex];
             items.RemoveAt(draggedIndex);
             items.Insert(targetIndex, draggedItem);
+
+            if (itemsControl is SelectingItemsControl selectingItemsControl)
+            {
+                selectingItemsControl.SelectedIndex = targetIndex;
+            }
         }
 
         private void Moved(object? sender, PointerEventArgs e)
