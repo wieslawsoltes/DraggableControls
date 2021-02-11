@@ -2,111 +2,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
-        xmlns:b="clr-namespace:DockDemo.Behaviors;assembly=DockDemo"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
         x:Class="DockDemo.MainWindow"
         WindowState="Normal" WindowStartupLocation="CenterScreen"
         Width="600" Height="450"
         Title="Demo">
-    <Window.Resources>
-        <Thickness x:Key="TabControlTopPlacementItemMargin">0 0 0 2</Thickness>
-    </Window.Resources>
     <Window.Styles>
-
-
-        <Style Selector="TabControl">
-            <Setter Property="Margin" Value="0" />
-            <Setter Property="Padding" Value="{DynamicResource TabItemMargin}" />
-            <Setter Property="Background" Value="{DynamicResource TabControlBackground}" />
-            <Setter Property="Template">
-                <ControlTemplate>
-                    <Border Margin="{TemplateBinding Margin}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalAlignment}">
-                        <DockPanel>
-                            <Border Name="PART_ItemsPresenterBorder"
-                                    DockPanel.Dock="{TemplateBinding TabStripPlacement}">
-                                <ItemsPresenter Name="PART_ItemsPresenter"
-                                                Items="{TemplateBinding Items}"
-                                                ItemsPanel="{TemplateBinding ItemsPanel}"
-                                                ItemTemplate="{TemplateBinding ItemTemplate}"/>
-                            </Border>
-                            <ContentPresenter Name="PART_SelectedContentHost"
-                                              Margin="{TemplateBinding Padding}"
-                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              Content="{TemplateBinding SelectedContent}"
-                                              ContentTemplate="{TemplateBinding SelectedContentTemplate}" />
-                        </DockPanel>
-                    </Border>
-                </ControlTemplate>
-            </Setter>
-        </Style>
-        <Style Selector="TabControl[TabStripPlacement=Left] /template/ ItemsPresenter#PART_ItemsPresenter > WrapPanel">
-            <Setter Property="Orientation" Value="Vertical" />
-        </Style>
-        <Style Selector="TabControl[TabStripPlacement=Right] /template/ ItemsPresenter#PART_ItemsPresenter > WrapPanel">
-            <Setter Property="Orientation" Value="Vertical" />
-        </Style>
-        <Style Selector="TabControl[TabStripPlacement=Top] /template/ ItemsPresenter#PART_ItemsPresenter">
-            <Setter Property="Margin" Value="{DynamicResource TabControlTopPlacementItemMargin}" />
-        </Style>
-        
-
-        <Style Selector="TabControl">
-            <Setter Property="Background" Value="LightGray" />
-        </Style>
-        <Style Selector="TabControl /template/ Border#PART_ItemsPresenterBorder">
-            <Setter Property="Background" Value="DarkGray" />
-        </Style>
-        <Style Selector="TabItem">
-            <Setter Property="Margin" Value="0,0,0,0" />
-            <Setter Property="Padding" Value="12,0,12,0" />
-            <Setter Property="Background" Value="WhiteSmoke" />
-            <Setter Property="BorderBrush" Value="Black" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="ZIndex" Value="0" />
-            <Setter Property="(i:Interaction.Behaviors)">
-                <b:SharedContentTemplate>
-                    <b:SharedContent>
-                        <i:BehaviorCollection>
-                            <b:ItemDragBehavior/>
-                        </i:BehaviorCollection>
-                    </b:SharedContent>
-                </b:SharedContentTemplate>
-            </Setter>
-        </Style>
-        <Style Selector="TabItem:selected">
-            <Setter Property="Background" Value="White" />
-        </Style>
-        <Style Selector="TabItem:pointerover /template/ Border#PART_LayoutRoot">
-            <Setter Property="Background" Value="LightGray" />
-        </Style>
-        <Style Selector="TabItem:selected:pointerover /template/ Border#PART_LayoutRoot">
-            <Setter Property="Background" Value="LightGray" />
-        </Style>
-        <Style Selector="TabItem:selected /template/ Border#PART_SelectedPipe">
-            <Setter Property="IsVisible" Value="False" />
-        </Style>
-        <Style Selector="TabItem:pressed">
-            <Setter Property="ZIndex" Value="1" />
-        </Style>
-
-
+        <StyleInclude Source="/DragItemsControl.axaml"/>
         <Style Selector="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
-
-
     </Window.Styles>
-
-
-    <TabControl Background="LightGray">
+    <!--<TabControl Background="LightGray">
         <TabItem Header="Tab1">
             <TextBlock Text="Tab1"/>
         </TabItem>
@@ -116,7 +24,21 @@
         <TabItem Header="Tab3">
             <TextBlock Text="Tab3"/>
         </TabItem>
-    </TabControl>
-
-
+    </TabControl>-->
+    <ListBox>
+        <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBoxItem>
+            <TextBlock Text="Item1"/>
+        </ListBoxItem>
+        <ListBoxItem>
+            <TextBlock Text="Item2"/>
+        </ListBoxItem>
+        <ListBoxItem>
+            <TextBlock Text="Item3"/>
+        </ListBoxItem>
+    </ListBox>
 </Window>
