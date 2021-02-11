@@ -99,6 +99,16 @@
             </b:SharedContentTemplate>
         </Setter>
     </Style>
+    <!--<Style Selector="ListBoxItem">
+        <Setter Property="ZIndex" Value="0" />
+        <Setter Property="(i:Interaction.Behaviors)">
+            <b:ObjectTemplate>
+                    <i:BehaviorCollection>
+                        <b:ItemDragBehavior Orientation="Vertical"/>
+                    </i:BehaviorCollection>
+            </b:ObjectTemplate>
+        </Setter>
+    </Style>-->
     <Style Selector="ListBoxItem:pressed">
         <Setter Property="ZIndex" Value="1" />
     </Style>
