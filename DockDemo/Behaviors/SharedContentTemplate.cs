@@ -10,20 +10,20 @@ namespace DockDemo.Behaviors
     {
         [Content]
         [TemplateContent]
-        public object Content { get; set; }
+        public object? Content { get; set; }
 
-        public static ControlTemplateResult Load(object templateContent)
+        private static ControlTemplateResult Load(object templateContent)
         {
             if (templateContent is Func<IServiceProvider, object> direct)
             {
-                return (ControlTemplateResult)direct(null);
+                return (ControlTemplateResult)direct(null!);
             }
             throw new ArgumentException(nameof(templateContent));
         }
 
         public SharedContent Build()
         {
-            return (SharedContent)Load(Content).Control;
+            return (SharedContent)Load(Content!).Control;
         }
 
         object? ITemplate.Build() => Build().Content;

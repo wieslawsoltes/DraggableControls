@@ -3,7 +3,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
-        xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions;assembly=Avalonia.Xaml.Interactions"
         xmlns:b="clr-namespace:DockDemo.Behaviors;assembly=DockDemo"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
         x:Class="DockDemo.MainWindow"
@@ -75,7 +74,7 @@
                 <b:SharedContentTemplate>
                     <b:SharedContent>
                         <i:BehaviorCollection>
-                            <b:TabItemDragBehavior/>
+                            <b:ItemDragBehavior/>
                         </i:BehaviorCollection>
                     </b:SharedContent>
                 </b:SharedContentTemplate>

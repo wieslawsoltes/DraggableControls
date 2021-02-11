@@ -6,6 +6,6 @@ namespace DockDemo.Behaviors
     public class SharedContent : Control
     {
         [Content]
-        public object Content { get; set; }
+        public object? Content { get; set; }
     }
 }

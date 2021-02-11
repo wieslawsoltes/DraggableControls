@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Avalonia;
-using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -9,14 +9,14 @@ using Avalonia.Xaml.Interactivity;
 
 namespace DockDemo.Behaviors
 {
-    public class TabItemDragBehavior : Behavior<TabItem>
+    public class ItemDragBehavior : Behavior<IControl>
     {
         private bool _enableDrag;
         private Point _start;
         private int _draggedIndex;
         private int _targetIndex;
-        private TabControl? _tabControl;
-        private TabItem? _draggedTabItem;
+        private ItemsControl? _itemsControl;
+        private IControl? _draggedContainer;
 
         protected override void OnAttached()
         {
@@ -44,7 +44,7 @@ namespace DockDemo.Behaviors
 
         private void Pressed(object? sender, PointerPressedEventArgs e)
         {
-            if (AssociatedObject?.Parent is not TabControl tabControl)
+            if (AssociatedObject?.Parent is not ItemsControl itemsControl)
             {
                 return;
             }
@@ -53,128 +53,140 @@ namespace DockDemo.Behaviors
             _start = e.GetPosition(AssociatedObject.Parent);
             _draggedIndex = -1;
             _targetIndex = -1;
-            _tabControl = tabControl;
-            _draggedTabItem = AssociatedObject;
-            AddTransforms(_tabControl);
+            _itemsControl = itemsControl;
+            _draggedContainer = AssociatedObject;
+
+            AddTransforms(_itemsControl);
         }
 
         private void Released(object? sender, PointerReleasedEventArgs e)
         {
             if (_enableDrag)
             {
-                RemoveTransforms(_tabControl);
+                RemoveTransforms(_itemsControl);
 
                 if (_draggedIndex >= 0 && _targetIndex >= 0 && _draggedIndex != _targetIndex)
                 {
-                    Debug.WriteLine($"MoveTabItem {_draggedIndex} -> {_targetIndex}");
-                    MoveTabItem(_tabControl, _draggedIndex, _targetIndex);
+                    Debug.WriteLine($"MoveItem {_draggedIndex} -> {_targetIndex}");
+                    MoveDraggedItem(_itemsControl, _draggedIndex, _targetIndex);
                 }
 
                 _draggedIndex = -1;
                 _targetIndex = -1;
                 _enableDrag = false;
-                _tabControl = null;
-                _draggedTabItem = null;
+                _itemsControl = null;
+                _draggedContainer = null;
             }
         }
 
-        private void AddTransforms(TabControl? tabControl)
+        private void AddTransforms(ItemsControl? itemsControl)
         {
-            if (tabControl?.Items is not AvaloniaList<object> tabItems)
+            if (itemsControl?.Items is null)
             {
                 return;
             }
 
-            for (var i = 0; i < tabItems.Count; i++)
+            var i = 0;
+
+            foreach (var _ in itemsControl.Items)
             {
-                if (tabItems[i] is TabItem tabItem)
+                var container = itemsControl.ItemContainerGenerator.ContainerFromIndex(i);
+                if (container is not null)
                 {
-                    tabItem.RenderTransform = new TranslateTransform();
+                    container.RenderTransform = new TranslateTransform();
                 }
+  
+                i++;
             }  
         }
 
-        private void RemoveTransforms(TabControl? tabControl)
+        private void RemoveTransforms(ItemsControl? itemsControl)
         {
-            if (tabControl?.Items is not AvaloniaList<object> tabItems)
+            if (itemsControl?.Items is null)
             {
                 return;
             }
 
-            for (var i = 0; i < tabItems.Count; i++)
+            var i = 0;
+
+            foreach (var _ in itemsControl.Items)
             {
-                if (tabItems[i] is TabItem tabItem)
+                var container = itemsControl.ItemContainerGenerator.ContainerFromIndex(i);
+                if (container is not null)
                 {
-                    tabItem.RenderTransform = null;
+                    container.RenderTransform = null;
                 }
+  
+                i++;
             }  
         }
 
-        private void MoveTabItem(TabControl? tabControl, int draggedIndex, int targetIndex)
+        private void MoveDraggedItem(ItemsControl? itemsControl, int draggedIndex, int targetIndex)
         {
-            if (tabControl?.Items is not AvaloniaList<object> tabItems)
+            if (itemsControl?.Items is not IList<object> items)
             {
                 return;
             }
 
-            var tabItem = tabItems[draggedIndex];
-            tabItems.RemoveAt(draggedIndex);
-            tabItems.Insert(targetIndex, tabItem);
+            var draggedItem = items[draggedIndex];
+            items.RemoveAt(draggedIndex);
+            items.Insert(targetIndex, draggedItem);
         }
 
         private void Moved(object? sender, PointerEventArgs e)
         {
-            if (_tabControl is null || _draggedTabItem is null || !_enableDrag)
+            if (_itemsControl?.Items is null || _draggedContainer is null || !_enableDrag)
             {
                 return;
             }
 
-            if (_tabControl.Items is not AvaloniaList<object> tabItems)
-            {
-                return;
-            }
-
-            var position = e.GetPosition(_tabControl);
+            var position = e.GetPosition(_itemsControl);
             var deltaX = position.X - _start.X;
 
-            ((TranslateTransform) _draggedTabItem.RenderTransform).X = deltaX;
+            ((TranslateTransform) _draggedContainer.RenderTransform).X = deltaX;
 
-            _draggedIndex = _tabControl.ItemContainerGenerator.IndexFromContainer(_draggedTabItem);
+            _draggedIndex = _itemsControl.ItemContainerGenerator.IndexFromContainer(_draggedContainer);
             _targetIndex = -1;
 
-            var draggedBounds = _draggedTabItem.Bounds;
+            var draggedBounds = _draggedContainer.Bounds;
             var draggedStartX = draggedBounds.X;
             var draggedDeltaStartX = draggedBounds.X + deltaX;
             var draggedDeltaEndX = draggedBounds.X + deltaX + draggedBounds.Width;
 
-            for (var i = 0; i < tabItems.Count; i++)
+            var i = 0;
+
+            foreach (var _ in _itemsControl.Items)
             {
-                if (tabItems[i] is not TabItem tabItem || tabItem.RenderTransform is null || ReferenceEquals(tabItem, _draggedTabItem))
+                var targetContainer = _itemsControl.ItemContainerGenerator.ContainerFromIndex(i);
+                if (targetContainer?.RenderTransform is null || ReferenceEquals(targetContainer, _draggedContainer))
                 {
+                    i++;
                     continue;
                 }
 
-                var targetBounds = tabItem.Bounds;
+                var targetBounds = targetContainer.Bounds;
                 var targetStartX = targetBounds.X;
                 var targetMidX = targetBounds.X + targetBounds.Width / 2;
-                var tabItemIndex = _tabControl.ItemContainerGenerator.IndexFromContainer(tabItem);
+                var targetIndex = _itemsControl.ItemContainerGenerator.IndexFromContainer(targetContainer);
 
                 if (targetStartX > draggedStartX && draggedDeltaEndX >= targetMidX)
                 {
-                    ((TranslateTransform) tabItem.RenderTransform).X = -draggedBounds.Width;
-                    _targetIndex = _targetIndex == -1 ? tabItemIndex : tabItemIndex > _targetIndex ? tabItemIndex : _targetIndex;
+                    ((TranslateTransform) targetContainer.RenderTransform).X = -draggedBounds.Width;
+                    _targetIndex = _targetIndex == -1 ? targetIndex : targetIndex > _targetIndex ? targetIndex : _targetIndex;
                     Debug.WriteLine($"Moved Right {_draggedIndex} -> {_targetIndex}");
                 }
                 else if (targetStartX < draggedStartX && draggedDeltaStartX <= targetMidX)
                 {
-                    ((TranslateTransform) tabItem.RenderTransform).X = draggedBounds.Width;
-                    _targetIndex = _targetIndex == -1 ? tabItemIndex : tabItemIndex < _targetIndex ? tabItemIndex : _targetIndex;
+                    ((TranslateTransform) targetContainer.RenderTransform).X = draggedBounds.Width;
+                    _targetIndex = _targetIndex == -1 ? targetIndex : targetIndex < _targetIndex ? targetIndex : _targetIndex;
                     Debug.WriteLine($"Moved Left {_draggedIndex} -> {_targetIndex}");
                 }
                 else
                 {
-                    ((TranslateTransform) tabItem.RenderTransform).X = 0;
+                    ((TranslateTransform) targetContainer.RenderTransform).X = 0;
                 }
+
+                i++;
             }
 
             Debug.WriteLine($"Moved {_draggedIndex} -> {_targetIndex}");
