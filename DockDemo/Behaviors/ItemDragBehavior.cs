@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
@@ -133,7 +134,7 @@ namespace DockDemo.Behaviors
 
         private void MoveDraggedItem(ItemsControl? itemsControl, int draggedIndex, int targetIndex)
         {
-            if (itemsControl?.Items is not IList<object> items)
+            if (itemsControl?.Items is not IList items)
             {
                 return;
             }
