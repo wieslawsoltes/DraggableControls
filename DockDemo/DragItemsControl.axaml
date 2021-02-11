@@ -112,5 +112,17 @@
     <Style Selector="ListBoxItem:pressed">
         <Setter Property="ZIndex" Value="1" />
     </Style>
+    <!-- Canvas Drag Styles -->
+    <Style Selector="Canvas > :is(Control)">
+        <Setter Property="(i:Interaction.Behaviors)">
+            <b:SharedContentTemplate>
+                <b:SharedContent>
+                    <i:BehaviorCollection>
+                        <b:CanvasDragBehavior/>
+                    </i:BehaviorCollection>
+                </b:SharedContent>
+            </b:SharedContentTemplate>
+        </Setter>
+    </Style>
 </Styles>
 
