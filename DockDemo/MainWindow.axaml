@@ -25,7 +25,7 @@
             <TextBlock Text="Tab3"/>
         </TabItem>
     </TabControl>-->
-    <ListBox>
+    <!--<ListBox>
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
                 <StackPanel Orientation="Vertical"/>
@@ -40,5 +40,6 @@
         <ListBoxItem>
             <TextBlock Text="Item3"/>
         </ListBoxItem>
-    </ListBox>
+    </ListBox>-->
+    <ListBox Items="{Binding Items}"/>
 </Window>
