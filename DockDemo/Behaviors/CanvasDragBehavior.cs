@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Media;
 using Avalonia.Xaml.Interactivity;
 
 namespace DockDemo.Behaviors
@@ -13,7 +12,8 @@ namespace DockDemo.Behaviors
         private bool _enableDrag;
         private Point _start;
         private Canvas? _canvas;
-        private AvaloniaObject? _draggedContainer;
+        private Control? _draggedContainer;
+        private Control? _adorner;
 
         protected override void OnAttached()
         {
@@ -39,6 +39,36 @@ namespace DockDemo.Behaviors
             }
         }
 
+        private void AddAdorner(Control control)
+        {
+            var layer = AdornerLayer.GetAdornerLayer(control);
+            if (layer is null)
+            {
+                return;
+            }
+
+            _adorner = new SelectionAdorner()
+            {
+                [AdornerLayer.AdornedElementProperty] = control
+            };
+
+            ((ISetLogicalParent) _adorner).SetParent(control);
+            layer.Children.Add(_adorner);
+        }
+
+        private void RemoveAdorner(Control control)
+        {
+            var layer = AdornerLayer.GetAdornerLayer(control);
+            if (layer is null || _adorner is null)
+            {
+                return;
+            }
+
+            layer.Children.Remove(_adorner);
+            ((ISetLogicalParent) _adorner).SetParent(null);
+            _adorner = null;
+        }
+
         private void Pressed(object? sender, PointerPressedEventArgs e)
         {
             if (AssociatedObject?.Parent is not Canvas canvas)
@@ -49,13 +79,20 @@ namespace DockDemo.Behaviors
             _enableDrag = true;
             _start = e.GetPosition(AssociatedObject.Parent);
             _canvas = canvas;
-            _draggedContainer = AssociatedObject as AvaloniaObject;
+            _draggedContainer = AssociatedObject;
+
+            AddAdorner(_draggedContainer);
         }
 
         private void Released(object? sender, PointerReleasedEventArgs e)
         {
             if (_enableDrag)
             {
+                if (_canvas is { } && _draggedContainer is { })
+                {
+                    RemoveAdorner(_draggedContainer);
+                }
+
                 _enableDrag = false;
                 _canvas = null;
                 _draggedContainer = null;
