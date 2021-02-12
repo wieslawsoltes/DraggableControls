@@ -15,7 +15,8 @@
             <Setter Property="ClipToBounds" Value="False" />
         </Style>
     </Window.Styles>
-    <!--<TabControl Background="LightGray">
+
+    <TabControl Background="LightGray">
         <TabItem Header="Tab1">
             <TextBlock Text="Tab1"/>
         </TabItem>
@@ -25,7 +26,8 @@
         <TabItem Header="Tab3">
             <TextBlock Text="Tab3"/>
         </TabItem>
-    </TabControl>-->
+    </TabControl>
+
     <!--<ListBox>
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
@@ -42,11 +44,22 @@
             <TextBlock Text="Item3"/>
         </ListBoxItem>
     </ListBox>-->
-    <!-- <ListBox Items="{Binding Items}"/> -->
-    <Canvas Width="500" Height="300" Background="LightGray">
+
+    <!--<ListBox Items="{Binding Items}"/>-->
+
+    <!--<TabControl Items="{Binding Items}" Background="LightGray">
+        <TabControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </TabControl.ItemsPanel>
+    </TabControl>-->
+
+    <!--<Canvas Width="500" Height="300" Background="LightGray">
         <Rectangle Fill="Blue" Width="60" Height="40" Canvas.Left="20" Canvas.Top="10"/>
         <Ellipse Fill="Red" Width="50" Height="50" Canvas.Left="120" Canvas.Top="30"/>
         <TextBlock Text="Hello from Avalonia" Canvas.Left="40" Canvas.Top="100"/>
         <Panel Background="Purple" Width="80" Height="70" Canvas.Left="250" Canvas.Top="100"/>
-    </Canvas>
+    </Canvas>-->
+
 </Window>
