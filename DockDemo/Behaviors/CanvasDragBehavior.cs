@@ -81,7 +81,7 @@ namespace DockDemo.Behaviors
             _canvas = canvas;
             _draggedContainer = AssociatedObject;
 
-            AddAdorner(_draggedContainer);
+            // AddAdorner(_draggedContainer);
         }
 
         private void Released(object? sender, PointerReleasedEventArgs e)
@@ -90,7 +90,7 @@ namespace DockDemo.Behaviors
             {
                 if (_canvas is { } && _draggedContainer is { })
                 {
-                    RemoveAdorner(_draggedContainer);
+                    // RemoveAdorner(_draggedContainer);
                 }
 
                 _enableDrag = false;
