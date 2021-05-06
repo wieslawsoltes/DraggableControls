@@ -2,13 +2,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="550"
         x:Class="DockDemo.MainWindow"
         WindowState="Normal" WindowStartupLocation="CenterScreen"
-        Width="600" Height="450"
+        Width="900" Height="550"
         Title="Demo">
     <Window.Styles>
-        <StyleInclude Source="/DragItemsControl.axaml"/>
+        <StyleInclude Source="/DraggableControls.axaml"/>
+        <StyleInclude Source="/CustomControls.axaml"/>
         <Style Selector="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -16,50 +17,64 @@
         </Style>
     </Window.Styles>
 
-    <!--<TabControl Classes="draggable" Background="LightGray">
-        <TabItem Header="Tab1">
-            <TextBlock Text="Tab1"/>
+    <TabControl Classes="draggable">
+
+        <TabItem Header="TabControl">
+            <TabControl Classes="draggable custom" Background="LightGray">
+                <TabItem Header="Tab1">
+                    <TextBlock Text="Tab1"/>
+                </TabItem>
+                <TabItem Header="Tab2">
+                    <TextBlock Text="Tab2"/>
+                </TabItem>
+                <TabItem Header="Tab3">
+                    <TextBlock Text="Tab3"/>
+                </TabItem>
+            </TabControl>
         </TabItem>
-        <TabItem Header="Tab2">
-            <TextBlock Text="Tab2"/>
+
+        <TabItem Header="TabControl (Items)">
+            <TabControl Classes="draggable custom" Items="{Binding Items}" Background="LightGray">
+                <TabControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </TabControl.ItemsPanel>
+            </TabControl>
         </TabItem>
-        <TabItem Header="Tab3">
-            <TextBlock Text="Tab3"/>
+
+        <TabItem Header="ListBox">
+            <ListBox Classes="draggable">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBoxItem>
+                    <TextBlock Text="Item1"/>
+                </ListBoxItem>
+                <ListBoxItem>
+                    <TextBlock Text="Item2"/>
+                </ListBoxItem>
+                <ListBoxItem>
+                    <TextBlock Text="Item3"/>
+                </ListBoxItem>
+            </ListBox>
         </TabItem>
-    </TabControl>-->
 
-    <!--<ListBox Classes="draggable">
-        <ListBox.ItemsPanel>
-            <ItemsPanelTemplate>
-                <StackPanel Orientation="Vertical"/>
-            </ItemsPanelTemplate>
-        </ListBox.ItemsPanel>
-        <ListBoxItem>
-            <TextBlock Text="Item1"/>
-        </ListBoxItem>
-        <ListBoxItem>
-            <TextBlock Text="Item2"/>
-        </ListBoxItem>
-        <ListBoxItem>
-            <TextBlock Text="Item3"/>
-        </ListBoxItem>
-    </ListBox>-->
+        <TabItem Header="ListBox (Items)">
+            <ListBox Classes="draggable" Items="{Binding Items}"/>
+        </TabItem>
 
-    <ListBox Classes="draggable" Items="{Binding Items}"/>
+        <TabItem Header="Canvas">
+            <Canvas Classes="draggable" Width="500" Height="300" Background="LightGray">
+                <Rectangle Fill="Blue" Width="60" Height="40" Canvas.Left="20" Canvas.Top="10"/>
+                <Ellipse Fill="Red" Width="50" Height="50" Canvas.Left="120" Canvas.Top="30"/>
+                <TextBlock Text="Hello from Avalonia" Canvas.Left="40" Canvas.Top="100"/>
+                <Panel Background="Purple" Width="80" Height="70" Canvas.Left="250" Canvas.Top="100"/>
+            </Canvas>
+        </TabItem>
 
-    <!--<TabControl Classes="draggable" Items="{Binding Items}" Background="LightGray">
-        <TabControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal"/>
-            </ItemsPanelTemplate>
-        </TabControl.ItemsPanel>
-    </TabControl>-->
-
-    <!--<Canvas Classes="draggable" Width="500" Height="300" Background="LightGray">
-        <Rectangle Fill="Blue" Width="60" Height="40" Canvas.Left="20" Canvas.Top="10"/>
-        <Ellipse Fill="Red" Width="50" Height="50" Canvas.Left="120" Canvas.Top="30"/>
-        <TextBlock Text="Hello from Avalonia" Canvas.Left="40" Canvas.Top="100"/>
-        <Panel Background="Purple" Width="80" Height="70" Canvas.Left="250" Canvas.Top="100"/>
-    </Canvas>-->
+    </TabControl>
 
 </Window>

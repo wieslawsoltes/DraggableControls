@@ -1,0 +1,63 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+        xmlns:b="clr-namespace:DockDemo.Behaviors;assembly=DockDemo">
+    <Styles.Resources>
+        <Thickness x:Key="TabControlTopPlacementItemMargin">0 0 0 2</Thickness>
+    </Styles.Resources>
+    <!-- TabItem Drag Styles -->
+    <Style Selector="TabControl.draggable > TabItem">
+        <Setter Property="ZIndex" Value="0" />
+        <Setter Property="(i:Interaction.Behaviors)">
+            <b:SharedContentTemplate>
+                <b:SharedContent>
+                    <i:BehaviorCollection>
+                        <b:ItemDragBehavior/>
+                    </i:BehaviorCollection>
+                </b:SharedContent>
+            </b:SharedContentTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="TabControl.draggable > TabItem:pressed">
+        <Setter Property="ZIndex" Value="1" />
+    </Style>
+    <!-- ListBoxItem Drag Styles -->
+    <Style Selector="ListBox.draggable > ListBoxItem">
+        <Setter Property="ZIndex" Value="0" />
+        <Setter Property="(i:Interaction.Behaviors)">
+            <b:SharedContentTemplate>
+                <b:SharedContent>
+                    <i:BehaviorCollection>
+                        <b:ItemDragBehavior Orientation="Vertical"/>
+                    </i:BehaviorCollection>
+                </b:SharedContent>
+            </b:SharedContentTemplate>
+        </Setter>
+    </Style>
+    <!-- TODO: ObjectTemplate -->
+    <!--<Style Selector="ListBox.draggable > ListBoxItem">
+        <Setter Property="ZIndex" Value="0" />
+        <Setter Property="(i:Interaction.Behaviors)">
+            <b:ObjectTemplate>
+                <i:BehaviorCollection>
+                    <b:ItemDragBehavior Orientation="Vertical"/>
+                </i:BehaviorCollection>
+            </b:ObjectTemplate>
+        </Setter>
+    </Style>-->
+    <Style Selector="ListBox.draggable > ListBoxItem:pressed">
+        <Setter Property="ZIndex" Value="1" />
+    </Style>
+    <!-- Canvas Drag Styles -->
+    <Style Selector="Canvas.draggable > :is(Control)">
+        <Setter Property="(i:Interaction.Behaviors)">
+            <b:SharedContentTemplate>
+                <b:SharedContent>
+                    <i:BehaviorCollection>
+                        <b:CanvasDragBehavior/>
+                    </i:BehaviorCollection>
+                </b:SharedContent>
+            </b:SharedContentTemplate>
+        </Setter>
+    </Style>
+</Styles>
