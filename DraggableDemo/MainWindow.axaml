@@ -7,9 +7,10 @@
         WindowState="Normal" WindowStartupLocation="CenterScreen"
         Width="900" Height="550"
         Title="Demo">
+
     <Window.Styles>
-        <StyleInclude Source="/DraggableControls.axaml"/>
-        <StyleInclude Source="/CustomControls.axaml"/>
+        <StyleInclude Source="/Styles/DraggableStyles.axaml"/>
+        <StyleInclude Source="/Styles/CustomStyles.axaml"/>
         <Style Selector="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
