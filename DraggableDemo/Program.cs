@@ -1,6 +1,6 @@
 ﻿using Avalonia;
 
-namespace DockDemo
+namespace DraggableDemo
 {
     class Program
     {

@@ -10,7 +10,7 @@ using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Xaml.Interactivity;
 
-namespace DockDemo.Behaviors
+namespace DraggableDemo.Behaviors
 {
     public class ItemDragBehavior : Behavior<IControl>
     {

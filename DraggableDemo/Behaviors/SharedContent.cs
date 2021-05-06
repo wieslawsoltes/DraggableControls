@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Metadata;
 
-namespace DockDemo.Behaviors
+namespace DraggableDemo.Behaviors
 {
     public class SharedContent : Control
     {

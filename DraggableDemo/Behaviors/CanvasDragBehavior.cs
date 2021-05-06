@@ -5,7 +5,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Xaml.Interactivity;
 
-namespace DockDemo.Behaviors
+namespace DraggableDemo.Behaviors
 {
     public class CanvasDragBehavior : Behavior<Control>
     {

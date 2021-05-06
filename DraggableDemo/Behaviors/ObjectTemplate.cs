@@ -2,7 +2,7 @@
 using Avalonia.Metadata;
 using Avalonia.Styling;
 
-namespace DockDemo.Behaviors
+namespace DraggableDemo.Behaviors
 {
     public class ObjectTemplate : ITemplate
     {

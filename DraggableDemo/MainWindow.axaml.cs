@@ -4,7 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace DockDemo
+namespace DraggableDemo
 {
     public class MainWindow : Window
     {

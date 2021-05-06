@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 
-namespace DockDemo.Behaviors
+namespace DraggableDemo.Behaviors
 {
     public class SelectionAdorner : Control
     {

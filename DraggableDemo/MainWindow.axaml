@@ -3,10 +3,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="550"
-        x:Class="DockDemo.MainWindow"
+        x:Class="DraggableDemo.MainWindow"
         WindowState="Normal" WindowStartupLocation="CenterScreen"
         Width="900" Height="550"
-        Title="Demo">
+        Title="Draggable Controls Demo">
 
     <Window.Styles>
         <StyleInclude Source="/Styles/DraggableStyles.axaml"/>

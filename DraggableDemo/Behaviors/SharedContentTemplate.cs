@@ -4,7 +4,7 @@ using Avalonia.Controls.Templates;
 using Avalonia.Metadata;
 using Avalonia.Styling;
 
-namespace DockDemo.Behaviors
+namespace DraggableDemo.Behaviors
 {
     public class SharedContentTemplate : ITemplate<SharedContent>
     {
