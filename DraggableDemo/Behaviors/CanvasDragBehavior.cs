@@ -11,7 +11,7 @@ namespace DraggableDemo.Behaviors
     {
         private bool _enableDrag;
         private Point _start;
-        private Canvas? _canvas;
+        private IControl? _parent;
         private Control? _draggedContainer;
         private Control? _adorner;
 
@@ -71,14 +71,14 @@ namespace DraggableDemo.Behaviors
 
         private void Pressed(object? sender, PointerPressedEventArgs e)
         {
-            if (AssociatedObject?.Parent is not Canvas canvas)
+            if (AssociatedObject?.Parent is not { } parent)
             {
                 return;
             }
 
             _enableDrag = true;
             _start = e.GetPosition(AssociatedObject.Parent);
-            _canvas = canvas;
+            _parent = parent;
             _draggedContainer = AssociatedObject;
 
             // AddAdorner(_draggedContainer);
@@ -88,25 +88,25 @@ namespace DraggableDemo.Behaviors
         {
             if (_enableDrag)
             {
-                if (_canvas is { } && _draggedContainer is { })
+                if (_parent is { } && _draggedContainer is { })
                 {
                     // RemoveAdorner(_draggedContainer);
                 }
 
                 _enableDrag = false;
-                _canvas = null;
+                _parent = null;
                 _draggedContainer = null;
             }
         }
 
         private void Moved(object? sender, PointerEventArgs e)
         {
-            if (_canvas is null || _draggedContainer is null || !_enableDrag)
+            if (_parent is null || _draggedContainer is null || !_enableDrag)
             {
                 return;
             }
 
-            var position = e.GetPosition(_canvas);
+            var position = e.GetPosition(_parent);
             var deltaX = position.X - _start.X;
             var deltaY = position.Y - _start.Y;
             _start = position;
