@@ -60,4 +60,16 @@
             </b:SharedContentTemplate>
         </Setter>
     </Style>
+    <!-- ItemsControl Canvas Drag Styles -->
+    <Style Selector="ItemsControl.draggable > :is(ContentPresenter)">
+        <Setter Property="(i:Interaction.Behaviors)">
+            <b:SharedContentTemplate>
+                <b:SharedContent>
+                    <i:BehaviorCollection>
+                        <b:CanvasDragBehavior/>
+                    </i:BehaviorCollection>
+                </b:SharedContent>
+            </b:SharedContentTemplate>
+        </Setter>
+    </Style>
 </Styles>
