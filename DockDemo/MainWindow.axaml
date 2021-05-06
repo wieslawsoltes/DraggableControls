@@ -16,7 +16,7 @@
         </Style>
     </Window.Styles>
 
-    <!--<TabControl Background="LightGray">
+    <!--<TabControl Classes="draggable" Background="LightGray">
         <TabItem Header="Tab1">
             <TextBlock Text="Tab1"/>
         </TabItem>
@@ -28,7 +28,7 @@
         </TabItem>
     </TabControl>-->
 
-    <!--<ListBox>
+    <!--<ListBox Classes="draggable">
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
                 <StackPanel Orientation="Vertical"/>
@@ -45,9 +45,9 @@
         </ListBoxItem>
     </ListBox>-->
 
-    <ListBox Items="{Binding Items}"/>
+    <ListBox Classes="draggable" Items="{Binding Items}"/>
 
-    <!--<TabControl Items="{Binding Items}" Background="LightGray">
+    <!--<TabControl Classes="draggable" Items="{Binding Items}" Background="LightGray">
         <TabControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <StackPanel Orientation="Horizontal"/>
@@ -55,7 +55,7 @@
         </TabControl.ItemsPanel>
     </TabControl>-->
 
-    <!--<Canvas Width="500" Height="300" Background="LightGray">
+    <!--<Canvas Classes="draggable" Width="500" Height="300" Background="LightGray">
         <Rectangle Fill="Blue" Width="60" Height="40" Canvas.Left="20" Canvas.Top="10"/>
         <Ellipse Fill="Red" Width="50" Height="50" Canvas.Left="120" Canvas.Top="30"/>
         <TextBlock Text="Hello from Avalonia" Canvas.Left="40" Canvas.Top="100"/>

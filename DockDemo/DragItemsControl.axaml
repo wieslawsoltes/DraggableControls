@@ -6,7 +6,7 @@
         <Thickness x:Key="TabControlTopPlacementItemMargin">0 0 0 2</Thickness>
     </Styles.Resources>
     <!-- TabControl Custom Styles -->
-    <Style Selector="TabControl">
+    <Style Selector="TabControl.draggable">
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="{DynamicResource TabItemMargin}" />
         <Setter Property="Background" Value="{DynamicResource TabControlBackground}" />
@@ -53,7 +53,7 @@
         <Setter Property="Background" Value="DarkGray" />
     </Style>
     <!-- TabItem Drag Styles -->
-    <Style Selector="TabItem">
+    <Style Selector="TabControl.draggable > TabItem">
         <Setter Property="Margin" Value="0,0,0,0" />
         <Setter Property="Padding" Value="12,0,12,0" />
         <Setter Property="Background" Value="WhiteSmoke" />
@@ -70,7 +70,7 @@
             </b:SharedContentTemplate>
         </Setter>
     </Style>
-    <Style Selector="TabItem:pressed">
+    <Style Selector="TabControl.draggable > TabItem:pressed">
         <Setter Property="ZIndex" Value="1" />
     </Style>
     <!-- TabItem Custom Styles -->
@@ -87,7 +87,7 @@
         <Setter Property="IsVisible" Value="False" />
     </Style>
     <!-- ListBoxItem Drag Styles -->
-    <Style Selector="ListBoxItem">
+    <Style Selector="ListBox.draggable > ListBoxItem">
         <Setter Property="ZIndex" Value="0" />
         <Setter Property="(i:Interaction.Behaviors)">
             <b:SharedContentTemplate>
@@ -99,21 +99,21 @@
             </b:SharedContentTemplate>
         </Setter>
     </Style>
-    <!--<Style Selector="ListBoxItem">
+    <!--<Style Selector="ListBox.draggable > ListBoxItem">
         <Setter Property="ZIndex" Value="0" />
         <Setter Property="(i:Interaction.Behaviors)">
             <b:ObjectTemplate>
-                    <i:BehaviorCollection>
-                        <b:ItemDragBehavior Orientation="Vertical"/>
-                    </i:BehaviorCollection>
+                <i:BehaviorCollection>
+                    <b:ItemDragBehavior Orientation="Vertical"/>
+                </i:BehaviorCollection>
             </b:ObjectTemplate>
         </Setter>
     </Style>-->
-    <Style Selector="ListBoxItem:pressed">
+    <Style Selector="ListBox.draggable > ListBoxItem:pressed">
         <Setter Property="ZIndex" Value="1" />
     </Style>
     <!-- Canvas Drag Styles -->
-    <Style Selector="Canvas > :is(Control)">
+    <Style Selector="Canvas.draggable > :is(Control)">
         <Setter Property="(i:Interaction.Behaviors)">
             <b:SharedContentTemplate>
                 <b:SharedContent>
