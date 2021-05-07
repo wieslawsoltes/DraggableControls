@@ -4,6 +4,7 @@ using Avalonia.Styling;
 
 namespace DraggableDemo.Behaviors
 {
+    // TODO: ObjectTemplate requires https://github.com/AvaloniaUI/Avalonia/pull/5468
     public class ObjectTemplate : ITemplate
     {
         [Content]
