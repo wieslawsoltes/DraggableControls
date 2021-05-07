@@ -34,7 +34,7 @@
             </b:SharedContentTemplate>
         </Setter>
     </Style>
-    <!-- TODO: ObjectTemplate -->
+    <!-- TODO: ObjectTemplate requires https://github.com/AvaloniaUI/Avalonia/pull/5468 -->
     <!--<Style Selector="ListBox.draggable > ListBoxItem">
         <Setter Property="ZIndex" Value="0" />
         <Setter Property="(i:Interaction.Behaviors)">
